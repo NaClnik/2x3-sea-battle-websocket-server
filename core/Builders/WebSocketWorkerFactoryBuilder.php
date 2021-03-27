@@ -36,6 +36,12 @@ class WebSocketWorkerFactoryBuilder
         return $this;
     } // setWebSocketStrategy.
 
+    public function setSocketName(string $socketName): self
+    {
+        $this->webSocketWorkerFactory->setSocketName($socketName);
+        return $this;
+    } // setSocketName.
+
     public function build(): WebSocketWorkerFactory
     {
         return $this->webSocketWorkerFactory;

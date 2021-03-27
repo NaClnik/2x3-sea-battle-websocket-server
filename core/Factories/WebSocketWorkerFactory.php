@@ -73,8 +73,22 @@ class WebSocketWorkerFactory
     #endregion
 
     // Методы класса.
-    public function create()
+    public function create(): Worker
     {
-        $worker = new Worker();
+        // Создаём экземпляр воркера.
+        $worker = new Worker($this->socketName);
+
+        // Задаём количество процессов.
+        $worker->count = $this->numberOfProcesses;
+
+        // Назначаем обработчики событий.
+        // TODO: Переделать: получить ссылку на функцию из интерфейса.
+        $worker->onConnect = function ($connection){ $this->webSocketStrategy->onConnect($connection);};
+        $worker->onMessage = function ($connection, $data){$this->webSocketStrategy->onMessage($connection, $data);};
+        $worker->onClose = function ($connection){$this->webSocketStrategy->onClose($connection);};
+        $worker->onClose = function ($connection, $code, $msg){$this->webSocketStrategy->onError($connection, $code, $msg);};
+
+        // Возвращаем воркера.
+        return $worker;
     } // create.
 } // WebSocketWorkerFactory.
