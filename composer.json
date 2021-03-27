@@ -1,0 +1,20 @@
+{
+    "name": "naclnik/sea-battle-websocket-server",
+    "type": "project",
+    "description": "web socket server for sea battle",
+    "require": {
+        "workerman/workerman": "^4.0"
+    },
+    "authors": [
+        {
+            "name": "Daniil",
+            "email": "danycall19@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    }
+}
