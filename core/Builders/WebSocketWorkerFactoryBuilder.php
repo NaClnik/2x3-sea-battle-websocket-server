@@ -4,8 +4,8 @@
 namespace Core\Builders;
 
 // Строитель для WebSocketWorkerFactory в паттерне FluentBuilder.
+use Core\Base\Abstracts\WebSocket;
 use Core\Factories\WebSocketWorkerFactory;
-use Core\Wrappers\Base\Interfaces\IWebSocket;
 
 class WebSocketWorkerFactoryBuilder
 {
@@ -30,7 +30,7 @@ class WebSocketWorkerFactoryBuilder
         return $this;
     } // setNumberOfProcesses.
 
-    public function setWebSocketStrategy(IWebSocket $webSocketStrategy): self
+    public function setWebSocketStrategy(WebSocket $webSocketStrategy): self
     {
         $this->webSocketWorkerFactory->setWebSocketStrategy($webSocketStrategy);
         return $this;

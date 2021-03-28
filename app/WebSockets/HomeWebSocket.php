@@ -4,20 +4,20 @@
 namespace App\WebSockets;
 
 
+use Core\Base\Abstracts\WebSocket;
 use Core\Wrappers\Base\Interfaces\IWebSocket;
 
-class HomeWebSocket implements IWebSocket
+class HomeWebSocket extends WebSocket
 {
 
     public function onConnect($connection)
     {
-        print_r($connection);
-        //echo "New connection\n";
+        echo "New connection\n";
     } // onConnect.
 
     public function onMessage($connection, $data)
     {
-        // Send hello $data
+        var_dump($data);
         $connection->send('Hello ' . $data);
     } // onMessage.
 

@@ -4,6 +4,7 @@
 namespace Core\Factories;
 
 
+use Core\Base\Abstracts\WebSocket;
 use Core\Wrappers\Base\Interfaces\IWebSocket;
 use Workerman\Worker;
 
@@ -11,7 +12,7 @@ class WebSocketWorkerFactory
 {
     // Поля класса.
     private int $numberOfProcesses;        // Количество процессов.
-    private IWebSocket $webSocketStrategy; // Стратегия для создания воркера.
+    private WebSocket $webSocketStrategy;  // Стратегия для создания воркера.
     private string $socketName;            // Имя вебСокета для подключения клиента.
 
     // Конструктор.
@@ -40,17 +41,17 @@ class WebSocketWorkerFactory
     }
 
     /**
-     * @return IWebSocket
+     * @return WebSocket
      */
-    public function getWebSocketStrategy(): IWebSocket
+    public function getWebSocketStrategy(): WebSocket
     {
         return $this->webSocketStrategy;
     }
 
     /**
-     * @param IWebSocket $webSocketStrategy
+     * @param WebSocket $webSocketStrategy
      */
-    public function setWebSocketStrategy(IWebSocket $webSocketStrategy): void
+    public function setWebSocketStrategy(WebSocket $webSocketStrategy): void
     {
         $this->webSocketStrategy = $webSocketStrategy;
     }
@@ -82,11 +83,13 @@ class WebSocketWorkerFactory
         $worker->count = $this->numberOfProcesses;
 
         // Назначаем обработчики событий.
-        // TODO: Переделать: получить ссылку на функцию из интерфейса.
+        // TODO: Переделать: получить ссылку на функцию из экземпляра класса.
         $worker->onConnect = function ($connection){ $this->webSocketStrategy->onConnect($connection);};
         $worker->onMessage = function ($connection, $data){$this->webSocketStrategy->onMessage($connection, $data);};
         $worker->onClose = function ($connection){$this->webSocketStrategy->onClose($connection);};
-        $worker->onClose = function ($connection, $code, $msg){$this->webSocketStrategy->onError($connection, $code, $msg);};
+        $worker->onError = function ($connection, $code, $msg){$this->webSocketStrategy->onError($connection, $code, $msg);};
+
+        $this->webSocketStrategy->setWorker($worker);
 
         // Возвращаем воркера.
         return $worker;
