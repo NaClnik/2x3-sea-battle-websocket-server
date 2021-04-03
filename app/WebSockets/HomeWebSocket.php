@@ -5,6 +5,10 @@ namespace App\WebSockets;
 
 
 use Core\Base\Abstracts\WebSocket;
+use Core\Bootstrap\WebSocketControllerLoader;
+use Core\Bootstrap\WebSocketControllerLoaderBuilder;
+use Core\Builders\WebSocketWorkerFactoryBuilder;
+use Core\Models\WebSocketDataBundle;
 use Core\Wrappers\Base\Interfaces\IWebSocket;
 
 class HomeWebSocket extends WebSocket
@@ -17,10 +21,13 @@ class HomeWebSocket extends WebSocket
 
     public function onMessage($connection, $data)
     {
-        var_dump($data);
-        $connection->send('Hello ' . $data);
+//        var_dump($data);
+//        $connection->send('Hello ' . $data);
+        $websocketDataBundle = new WebSocketDataBundle($this->worker, $connection, $data);
 
-        // $controllerLoader = new WebSocketControllerLoader()
+        $webSocketControllerLoader = new WebSocketControllerLoader($websocketDataBundle);
+
+        $webSocketControllerLoader->run();
     } // onMessage.
 
     public function onClose($connection)

@@ -9,6 +9,8 @@ namespace Core\Routing;
 // Строитель для Router (Паттерн FluentBuilder).
 use Core\Base\Abstracts\RouteDefiner;
 use Core\Base\Interfaces\IUriMatchValidator;
+use Core\Models\Route;
+use Core\Models\WebSocketDataBundle;
 
 class RouterBuilder
 {
@@ -21,17 +23,30 @@ class RouterBuilder
         $this->router = new Router();
     } // __construct.
 
-    public function setRoutesCollection(RouteDefiner $routeDefiner): RouterBuilder
+    // Статический метод, который создаёт экземпляр объекта.
+    public static function make()
+    {
+        return new self();
+    } // make.
+
+    // Методы класса.
+    public function setRoutesCollection(RouteDefiner $routeDefiner): self
     {
         $this->router->setRoutesCollection($routeDefiner->getRoutes());
         return $this;
     } // setRoutesCollection.
 
-    public function setUriMatchValidator(IUriMatchValidator $uriMatchValidator): RouterBuilder
+    public function setUriMatchValidator(IUriMatchValidator $uriMatchValidator): self
     {
         $this->router->setUriMatchValidator($uriMatchValidator);
         return $this;
     } // setUriMatchValidator.
+
+    public function setWebSocketDataBundle(WebSocketDataBundle $webSocketDataBundle)
+    {
+        $this->router->setWebSocketDataBundle($webSocketDataBundle);
+        return $this;
+    } // setWebSocketDataBundle.
 
     public function build(): Router
     {

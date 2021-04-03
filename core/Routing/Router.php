@@ -2,47 +2,30 @@
 
 namespace Core\Routing;
 
-use Core\Base\Abstracts\CoreResponse;
 use Core\Base\Interfaces\IUriMatchValidator;
 use Core\Defaults\DefaultUriMatchValidator;
 use Core\Exceptions\RouteNotFoundException;
 use Core\Models\Route;
 use Core\Models\RouteWithController;
+use Core\Models\WebSocketDataBundle;
 use Core\Reflection\ReflectionHandler;
 
 class Router
 {
     // Поля класса.
-    private Route $requestRoute;
     private RoutesCollection $routesCollection;
     private IUriMatchValidator $uriMatchValidator;
+    private WebSocketDataBundle $webSocketDataBundle;
 
     // Конструктор.
     public function __construct()
     {
-        $this->requestRoute = new Route($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
         $this->routesCollection = new RoutesCollection();
         $this->uriMatchValidator = new DefaultUriMatchValidator();
     } // __construct.
 
     #region Аксессоры класса
-    // Аксессоры класса.
-    /**
-     * @return Route
-     */
-    public function getRequestRoute(): Route
-    {
-        return $this->requestRoute;
-    }
-
-    /**
-     * @param Route $requestRoute
-     */
-    public function setRequestRoute(Route $requestRoute): void
-    {
-        $this->requestRoute = $requestRoute;
-    }
-
+    // Аксессоры и мутаторы класса.
     /**
      * @return RoutesCollection
      */
@@ -74,6 +57,22 @@ class Router
     {
         $this->uriMatchValidator = $uriMatchValidator;
     }
+
+    /**
+     * @return WebSocketDataBundle
+     */
+    public function getWebSocketDataBundle(): WebSocketDataBundle
+    {
+        return $this->webSocketDataBundle;
+    }
+
+    /**
+     * @param WebSocketDataBundle $webSocketDataBundle
+     */
+    public function setWebSocketDataBundle(WebSocketDataBundle $webSocketDataBundle): void
+    {
+        $this->webSocketDataBundle = $webSocketDataBundle;
+    }
     #endregion
 
     // Методы класса.
@@ -101,16 +100,18 @@ class Router
 
         // Получить массив с совпадающими маршрутами.
         $data = array_filter($routesCollection, function (Route $route){
-            return $this->uriMatchValidator->match($this->requestRoute, $route);
+            return $this->uriMatchValidator->match(new Route($this->webSocketDataBundle->getData()['route']), $route);
         });
 
         $foundRoute = array_values($data)[0];
 
-        if (!array_values($data)[0]){
-            throw new RouteNotFoundException();
-        } // if.
+//        if (!array_values($data)[0]){
+//            throw new RouteNotFoundException();
+//        } // if.
+//
+//        // Вернуть первый элемент из массива.
+//        return array_values($data)[0];
 
-        // Вернуть первый элемент из массива.
-        return array_values($data)[0];
+
     } // getMatchedRoute.
 } // Router.

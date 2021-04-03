@@ -10,7 +10,7 @@ class Route
     protected string $route;
 
     // Конструктор.
-    public function __construct(string $route, string $method)
+    public function __construct(string $route)
     {
         $this->route = $route;
     } // __construct.
