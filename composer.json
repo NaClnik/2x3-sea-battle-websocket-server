@@ -5,7 +5,8 @@
     "require": {
         "workerman/workerman": "^4.0",
       "ext-mbstring": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "authors": [
         {
