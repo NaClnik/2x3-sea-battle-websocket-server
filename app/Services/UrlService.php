@@ -11,6 +11,7 @@ class UrlService
 
     public function __construct()
     {
+        $this->fillAllProperties();
     } // __construct.
 
     #region Аксессоры класса
@@ -24,7 +25,7 @@ class UrlService
     }
     #endregion
 
-    public function fillProperties()
+    private function fillAllProperties()
     {
         $this->server_url = 'http://sea-battle-backend-aliciesy';
     } // fillProperties.
