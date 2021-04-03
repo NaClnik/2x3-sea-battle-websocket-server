@@ -34,3 +34,5 @@ class WebSocketApplication
     } // run.
 } // WebSocketApplication.
 ```
+
+## Example of using routing and controllers in the `onMessage` event

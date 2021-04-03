@@ -43,7 +43,9 @@ class ReflectionHandler
 
         $property = $reflectionController->getProperty('webSocketDataBundle');
 
-        $property->setValue($webSocketDataBundle);
+        $property->setAccessible(true);
+
+        $property->setValue($controller, $webSocketDataBundle);
     } // setAllProperties.
 
     // TODO: Сделать проверку на соответствие полученных аргументов параметрам метода.

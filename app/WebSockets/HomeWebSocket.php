@@ -20,14 +20,10 @@ class HomeWebSocket extends WebSocket
 
     public function onMessage(TcpConnection $connection, string $data)
     {
-//        var_dump($connection);
-//        $connection->send('Hello ' . $data);
-
-        echo gettype(json_decode($data));
-
         // TODO: Проверить JSON на валидность.
-        $websocketDataBundle = new WebSocketDataBundle($this->worker, $connection, json_decode($data));
+        $websocketDataBundle = new WebSocketDataBundle($this->worker, $connection, json_decode($data, true));
 
+        // TODO: Возможно стоит переименовать WebSocketControllerLoader в WebSocketRouterLoader.
         $webSocketControllerLoader = new WebSocketControllerLoader($websocketDataBundle);
 
         $webSocketControllerLoader->run();
