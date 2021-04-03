@@ -48,6 +48,9 @@ class WebSocketControllerLoader
             RouterBuilder::make()
             ->setRoutesCollection(new WebSocketRouteDefiner())
             ->setUriMatchValidator(new DefaultUriMatchValidator())
-            ->setWebSocketDataBundle($this->webSocketDataBundle);
+            ->setWebSocketDataBundle($this->webSocketDataBundle)
+            ->build();
+
+        $router->executeRoute();
     } // run.
 } // WebSocketControllerLoader.

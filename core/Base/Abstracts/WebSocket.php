@@ -4,6 +4,7 @@
 namespace Core\Base\Abstracts;
 
 
+use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
 abstract class WebSocket
@@ -16,7 +17,7 @@ abstract class WebSocket
     public abstract function onConnect($connection);
 
     // Событие, которое возникает при получении сообщения от клиента.
-    public abstract function onMessage($connection, $data);
+    public abstract function onMessage(TcpConnection $connection, string $data);
 
     // Событие, которое возникает при закрытии подключения с клиентом.
     public abstract function onClose($connection);

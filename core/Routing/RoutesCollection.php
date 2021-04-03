@@ -30,8 +30,8 @@ class RoutesCollection
     } // getRoutes.
 
     // Методы класса
-    public function create(string $route, string $method, string $controllerName, string $actionName)
+    public function define(string $route, string $controllerName, string $actionName)
     {
-        array_push($this->routes, new RouteWithController($route, strtoupper($method), $controllerName, $actionName));
+        array_push($this->routes, new RouteWithController($route, $controllerName, $actionName));
     } // create.
 } // RoutesCollection.

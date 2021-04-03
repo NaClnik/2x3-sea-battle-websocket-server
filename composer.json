@@ -4,7 +4,8 @@
     "description": "web socket server for sea battle",
     "require": {
         "workerman/workerman": "^4.0",
-      "ext-mbstring": "*"
+      "ext-mbstring": "*",
+      "ext-json": "*"
     },
     "authors": [
         {

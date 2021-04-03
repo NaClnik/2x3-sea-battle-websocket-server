@@ -6,10 +6,9 @@ namespace App\WebSockets;
 
 use Core\Base\Abstracts\WebSocket;
 use Core\Bootstrap\WebSocketControllerLoader;
-use Core\Bootstrap\WebSocketControllerLoaderBuilder;
-use Core\Builders\WebSocketWorkerFactoryBuilder;
 use Core\Models\WebSocketDataBundle;
-use Core\Wrappers\Base\Interfaces\IWebSocket;
+use Workerman\Connection\TcpConnection;
+use Workerman\Worker;
 
 class HomeWebSocket extends WebSocket
 {
@@ -19,11 +18,15 @@ class HomeWebSocket extends WebSocket
         echo "New connection\n";
     } // onConnect.
 
-    public function onMessage($connection, $data)
+    public function onMessage(TcpConnection $connection, string $data)
     {
-//        var_dump($data);
+//        var_dump($connection);
 //        $connection->send('Hello ' . $data);
-        $websocketDataBundle = new WebSocketDataBundle($this->worker, $connection, $data);
+
+        echo gettype(json_decode($data));
+
+        // TODO: Проверить JSON на валидность.
+        $websocketDataBundle = new WebSocketDataBundle($this->worker, $connection, json_decode($data));
 
         $webSocketControllerLoader = new WebSocketControllerLoader($websocketDataBundle);
 

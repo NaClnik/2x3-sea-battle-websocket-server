@@ -4,7 +4,16 @@
 namespace App\Controllers;
 
 
-class TestController
-{
+use Core\Base\Abstracts\WebSocketController;
 
+class TestController extends WebSocketController
+{
+    public function __construct()
+    {
+    } // __construct.
+
+    public function index()
+    {
+        $this->webSocketDataBundle->getConnection()->send($this->webSocketDataBundle->getData());
+    } // index.
 } // TestController.

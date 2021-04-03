@@ -11,9 +11,9 @@ class RouteWithController extends Route
     private string $actionName;
 
     // Конструктор.
-    public function __construct(string $route, string $method, string $controllerName, string $actionName)
+    public function __construct(string $route, string $controllerName, string $actionName)
     {
-        parent::__construct($route, $method);
+        parent::__construct($route);
         $this->controllerName = $controllerName;
         $this->actionName = $actionName;
     } // __construct.

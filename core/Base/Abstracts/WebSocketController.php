@@ -4,64 +4,31 @@
 namespace Core\Base\Abstracts;
 
 
+use Core\Models\WebSocketDataBundle;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
 abstract class WebSocketController
 {
     // Поля класса.
-    protected Worker $worker;            // Экземпляр воркера для просмотра подключений.
-    protected TcpConnection $connection; // Текущее подключение.
-    protected array $data;               // Данные от клиента.
+    protected WebSocketDataBundle $webSocketDataBundle;
 
     #region Аксессоры и мутаторы класса
     // Аксессоры и мутаторы класса.
     /**
-     * @return Worker
+     * @return WebSocketDataBundle
      */
-    public function getWorker(): Worker
+    public function getWebSocketDataBundle(): WebSocketDataBundle
     {
-        return $this->worker;
+        return $this->webSocketDataBundle;
     }
 
     /**
-     * @param Worker $worker
+     * @param WebSocketDataBundle $webSocketDataBundle
      */
-    public function setWorker(Worker $worker): void
+    public function setWebSocketDataBundle(WebSocketDataBundle $webSocketDataBundle): void
     {
-        $this->worker = $worker;
-    }
-
-    /**
-     * @return TcpConnection
-     */
-    public function getConnection(): TcpConnection
-    {
-        return $this->connection;
-    }
-
-    /**
-     * @param TcpConnection $connection
-     */
-    public function setConnection(TcpConnection $connection): void
-    {
-        $this->connection = $connection;
-    }
-
-    /**
-     * @return array
-     */
-    public function getData(): array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param array $data
-     */
-    public function setData(array $data): void
-    {
-        $this->data = $data;
+        $this->webSocketDataBundle = $webSocketDataBundle;
     }
     #endregion
 

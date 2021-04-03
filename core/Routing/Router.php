@@ -87,8 +87,11 @@ class Router
 
         // Получить данные из метода контроллера, связанного с маршрутом.
         return $reflectionHandler->getDataFromController(
-            $matchedRoute->getControllerName(), $matchedRoute->getActionName(),
-            $this->requestRoute->getRoute(), $matchedRoute->getRoute()
+            $matchedRoute->getControllerName(),
+            $matchedRoute->getActionName(),
+            $this->webSocketDataBundle->getData()['route'],
+            $matchedRoute->getRoute(),
+            $this->webSocketDataBundle
         );
     } // executeRoute.
 
@@ -103,6 +106,7 @@ class Router
             return $this->uriMatchValidator->match(new Route($this->webSocketDataBundle->getData()['route']), $route);
         });
 
+        // TODO: Протестить
         $foundRoute = array_values($data)[0];
 
 //        if (!array_values($data)[0]){
@@ -112,6 +116,10 @@ class Router
 //        // Вернуть первый элемент из массива.
 //        return array_values($data)[0];
 
+        if(!$foundRoute){
+            throw new RouteNotFoundException();
+        } // if.
 
+        return $foundRoute;
     } // getMatchedRoute.
 } // Router.

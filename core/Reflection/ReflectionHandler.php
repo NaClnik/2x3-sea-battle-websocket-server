@@ -6,6 +6,7 @@ namespace Core\Reflection;
 // TODO: Подумать над переименованием класса.
 use Core\Base\Abstracts\WebSocketController;
 use Core\Models\Route;
+use Core\Models\WebSocketDataBundle;
 use Core\Routing\RouteParser;
 use ReflectionClass;
 use ReflectionMethod;
@@ -19,8 +20,7 @@ class ReflectionHandler
     public function getDataFromController(
         string $controllerName, string $actionName,
         string $requestUri, string $definedUri,
-        Worker $worker, TcpConnection $connection,
-        array $data
+        WebSocketDataBundle $webSocketDataBundle
     )
     {
         // Получаем класс для рефлексии.
@@ -32,24 +32,18 @@ class ReflectionHandler
 
         $actionArguments = $this->getArgumentsForMethodFromUri($reflectionAction, $requestUri, $definedUri);
 
-        $this->setAllProperties($controller, $worker, $connection, $data);
+        $this->setAllProperties($controller, $webSocketDataBundle);
 
         return $reflectionAction->invokeArgs($controller, $actionArguments);
     } // getDataFromController.
 
-    public function setAllProperties(object $controller, Worker $worker, TcpConnection $connection, array $data): void
+    public function setAllProperties(object $controller, WebSocketDataBundle $webSocketDataBundle): void
     {
-        $dictionary = [
-            ['worker' => $worker],
-            ['connection' => $connection],
-            ['data' => $data]
-        ]; // dictionary.
-
         $reflectionController = new ReflectionClass($controller);
 
-        foreach ($reflectionController->getProperties() as $property){
-            $property->setValue($dictionary[$property->getName()]);
-        } // foreach.
+        $property = $reflectionController->getProperty('webSocketDataBundle');
+
+        $property->setValue($webSocketDataBundle);
     } // setAllProperties.
 
     // TODO: Сделать проверку на соответствие полученных аргументов параметрам метода.
