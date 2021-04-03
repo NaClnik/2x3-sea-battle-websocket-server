@@ -19,15 +19,22 @@ class PlayersService
         $this->http = $http;
     } // __construct.
 
+    // Методы класса.
     public function sendUsernameToServer(string $name)
     {
         $url = $this->urlService->getServerUrl();
 
-        $response = $this->client->request('POST', $url.'/players', [
+        $this->http->request('POST', $url.'/players', [
             'form_params' => [
                 'name' => $name
             ] // form_params.
         ]);
     } // sendUsernameToServer.
 
+    public function deletePlayerFromServerById(int $id)
+    {
+        $url = $this->urlService->getServerUrl();
+
+        $this->http->request('DELETE', $url."/players/$id");
+    } // deletePlayerFromServerById.
 } // PlayersService.

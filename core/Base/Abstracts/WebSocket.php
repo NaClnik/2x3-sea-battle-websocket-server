@@ -14,16 +14,16 @@ abstract class WebSocket
 
     // Абстрактные методы класса.
     // Событие, которое возникает при подключении клиента.
-    public abstract function onConnect($connection);
+    public abstract function onConnect(TcpConnection $connection);
 
     // Событие, которое возникает при получении сообщения от клиента.
     public abstract function onMessage(TcpConnection $connection, string $data);
 
     // Событие, которое возникает при закрытии подключения с клиентом.
-    public abstract function onClose($connection);
+    public abstract function onClose(TcpConnection $connection);
 
     // Событие, которое возникает при ошибке.
-    public abstract function onError($connection, $code, $msg);
+    public abstract function onError(TcpConnection $connection, $code, $msg);
 
     #region Аксессоры и мутаторы класса
     // Аксессоры и мутаторы класса.

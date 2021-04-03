@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
 
 class HttpService
 {
@@ -17,8 +18,8 @@ class HttpService
         $this->client = new Client();
     } // __construct.
 
-    public function request(string $method, string $url, array $options)
+    public function request(string $method, string $url = '', array $options = []): ResponseInterface
     {
-        $this->client->request($method, $url, $options);
+        return $this->client->request($method, $url, $options);
     } // request.
 } // HttpService.

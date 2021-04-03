@@ -13,7 +13,7 @@ use Workerman\Worker;
 class HomeWebSocket extends WebSocket
 {
 
-    public function onConnect($connection)
+    public function onConnect(TcpConnection $connection)
     {
         echo "New connection\n";
     } // onConnect.
@@ -29,13 +29,17 @@ class HomeWebSocket extends WebSocket
         $webSocketControllerLoader->run();
     } // onMessage.
 
-    public function onClose($connection)
+    public function onClose(TcpConnection $connection)
     {
         echo "Connection closed\n";
     } // onClose.
 
-    public function onError($connection, $code, $msg)
+    public function onError(TcpConnection $connection, $code, $msg)
     {
-        echo "Error\n";
+        foreach ($this->worker->connections as $connection){
+            $connection->send(json_encode([
+                'route' => 'localstorage/id'
+            ]));
+        } // foreach.
     } // onError.
 } // HomeWebSocket.

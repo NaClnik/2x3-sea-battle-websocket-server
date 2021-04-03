@@ -24,11 +24,10 @@ class PlayersController extends WebSocketController
         $data = $this->webSocketDataBundle->getData();
 
         $this->playersService->sendUsernameToServer($data['name']);
-
-        $this->getWebSocketDataBundle()->getConnection()->send('ok');
     } // enter.
 
     public function escape($id)
     {
+        $this->playersService->deletePlayerFromServerById($id);
     } // escape.
 } // UserController.
