@@ -19,6 +19,8 @@ class HomeWebSocket extends WebSocket
     {
         var_dump($data);
         $connection->send('Hello ' . $data);
+
+        // $controllerLoader = new WebSocketControllerLoader()
     } // onMessage.
 
     public function onClose($connection)

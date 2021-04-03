@@ -13,5 +13,5 @@ class WebSocketRouteDefiner extends RouteDefiner
     public function getRoutes(): RoutesCollection
     {
         return $this->routesCollection;
-    }
-}
+    } // getRoutes.
+} // WebSocketRouteDefiner.

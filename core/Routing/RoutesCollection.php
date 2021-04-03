@@ -34,25 +34,4 @@ class RoutesCollection
     {
         array_push($this->routes, new RouteWithController($route, strtoupper($method), $controllerName, $actionName));
     } // create.
-
-    // TODO: Сократить код.
-    public function get(string $route, string $controllerName, string $actionName)
-    {
-        $this->create($route, 'GET', $controllerName, $actionName);
-    } // get.
-
-    public function post(string $route, string $controllerName, string $actionName)
-    {
-        $this->create($route, 'POST', $controllerName, $actionName);
-    } // get.
-
-    public function put(string $route, string $controllerName, string $actionName)
-    {
-        $this->create($route, 'PUT', $controllerName, $actionName);
-    } // put.
-
-    public function delete(string $route, string $controllerName, string $actionName)
-    {
-        $this->create($route, 'DELETE', $controllerName, $actionName);
-    } // delete.
 } // RoutesCollection.
